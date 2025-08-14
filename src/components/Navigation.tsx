@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Menu, X, Wrench, User, LogOut } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
-import { useToast } from '@/hooks/use-toast';
+import { Menu, X, Wrench } from 'lucide-react';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const { user, signOut } = useAuth();
-  const { toast } = useToast();
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -18,22 +14,6 @@ const Navigation = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
-
-  const handleSignOut = async () => {
-    const { error } = await signOut();
-    if (error) {
-      toast({
-        title: 'Sign Out Failed',
-        description: error.message,
-        variant: 'destructive',
-      });
-    } else {
-      toast({
-        title: 'Signed Out',
-        description: 'You have been successfully signed out.',
-      });
-    }
-  };
 
   return (
     <nav className="bg-garage-dark/95 backdrop-blur-sm border-b border-border fixed w-full z-50">
@@ -58,39 +38,9 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            
-            {user ? (
-              <div className="flex items-center space-x-4">
-                <Link
-                  to="/dashboard"
-                  className={`text-sm font-medium transition-colors hover:text-primary flex items-center gap-2 ${
-                    isActive('/dashboard') ? 'text-primary' : 'text-foreground'
-                  }`}
-                >
-                  <User className="h-4 w-4" />
-                  Dashboard
-                </Link>
-                <Button variant="default" size="sm" asChild>
-                  <Link to="/book">Book Service</Link>
-                </Button>
-                <Button variant="outline" size="sm" onClick={handleSignOut}>
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </Button>
-              </div>
-            ) : (
-              <div className="flex items-center space-x-4">
-                <Link
-                  to="/auth"
-                  className="text-sm font-medium transition-colors hover:text-primary text-foreground"
-                >
-                  Sign In
-                </Link>
-                <Button variant="default" size="sm" asChild>
-                  <Link to="/auth">Get Started</Link>
-                </Button>
-              </div>
-            )}
+            <Button variant="default" size="sm">
+              Book Service
+            </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -121,48 +71,11 @@ const Navigation = () => {
                   {item.name}
                 </Link>
               ))}
-              
-              {user ? (
-                <>
-                  <Link
-                    to="/dashboard"
-                    className={`block px-3 py-2 text-base font-medium transition-colors hover:text-primary flex items-center gap-2 ${
-                      isActive('/dashboard') ? 'text-primary' : 'text-foreground'
-                    }`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    <User className="h-4 w-4" />
-                    Dashboard
-                  </Link>
-                  <div className="pt-2 space-y-2">
-                    <Button variant="default" size="sm" className="w-full" asChild>
-                      <Link to="/book" onClick={() => setIsOpen(false)}>Book Service</Link>
-                    </Button>
-                    <Button variant="outline" size="sm" className="w-full" onClick={() => {
-                      setIsOpen(false);
-                      handleSignOut();
-                    }}>
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Sign Out
-                    </Button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/auth"
-                    className="block px-3 py-2 text-base font-medium transition-colors hover:text-primary text-foreground"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Sign In
-                  </Link>
-                  <div className="pt-2">
-                    <Button variant="default" size="sm" className="w-full" asChild>
-                      <Link to="/auth" onClick={() => setIsOpen(false)}>Get Started</Link>
-                    </Button>
-                  </div>
-                </>
-              )}
+              <div className="pt-2">
+                <Button variant="default" size="sm" className="w-full">
+                  Book Service
+                </Button>
+              </div>
             </div>
           </div>
         )}

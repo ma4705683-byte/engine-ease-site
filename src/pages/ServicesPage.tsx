@@ -122,10 +122,7 @@ const ServicesPage = () => {
                     </ul>
                   </div>
                   
-                  <Button 
-                    className="w-full bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary"
-                    onClick={() => window.location.href = '/book'}
-                  >
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary">
                     Book This Service
                   </Button>
                 </CardContent>
@@ -145,20 +142,11 @@ const ServicesPage = () => {
             Don't see what you're looking for? Contact us for custom automotive solutions.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button 
-              size="lg" 
-              className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary"
-              onClick={() => window.location.href = '/contact'}
-            >
+            <Button size="lg" className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary">
               Contact Us
             </Button>
-            <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-muted-foreground text-muted-foreground hover:border-primary hover:text-primary"
-              onClick={() => window.location.href = '/book'}
-            >
-              Book a Service
+            <Button variant="outline" size="lg" className="border-muted-foreground text-muted-foreground hover:border-primary hover:text-primary">
+              View Pricing Guide
             </Button>
           </div>
         </div>
