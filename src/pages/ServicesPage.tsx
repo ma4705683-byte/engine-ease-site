@@ -3,6 +3,8 @@ import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Wrench, Disc, Cpu, Car, Zap, Settings, Shield, Droplets } from 'lucide-react';
+import { BookingModal } from '@/components/BookingModal';
+import { useState } from 'react';
 
 const allServices = [
   {
@@ -72,6 +74,14 @@ const allServices = [
 ];
 
 const ServicesPage = () => {
+  const [selectedService, setSelectedService] = useState<typeof allServices[0] | null>(null);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+
+  const handleBookService = (service: typeof allServices[0]) => {
+    setSelectedService(service);
+    setIsBookingModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -122,7 +132,10 @@ const ServicesPage = () => {
                     </ul>
                   </div>
                   
-                  <Button className="w-full bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary">
+                  <Button 
+                    onClick={() => handleBookService(service)}
+                    className="w-full bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary"
+                  >
                     Book This Service
                   </Button>
                 </CardContent>
@@ -153,6 +166,14 @@ const ServicesPage = () => {
       </section>
 
       <Footer />
+      
+      {selectedService && (
+        <BookingModal
+          isOpen={isBookingModalOpen}
+          onClose={() => setIsBookingModalOpen(false)}
+          service={selectedService}
+        />
+      )}
     </div>
   );
 };
