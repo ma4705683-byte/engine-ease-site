@@ -1,8 +1,18 @@
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Shield, Clock, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import garageHero from '@/assets/garage-hero.jpg';
+import { BookingModal } from '@/components/BookingModal';
 
 const Hero = () => {
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+
+  const defaultService = {
+    title: 'General Service',
+    price: 'From $50',
+    duration: '1 hour'
+  };
   return (
     <section className="relative min-h-screen flex items-center pt-16">
       {/* Background Image */}
@@ -26,13 +36,19 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button size="lg" className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-primary to-primary-glow hover:from-primary-glow hover:to-primary text-primary-foreground font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={() => setIsBookingModalOpen(true)}
+            >
               Book a Service
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button variant="outline" size="lg" className="border-muted-foreground text-muted-foreground hover:border-primary hover:text-primary">
-              View Services
-            </Button>
+            <Link to="/services">
+              <Button variant="outline" size="lg" className="border-muted-foreground text-muted-foreground hover:border-primary hover:text-primary w-full">
+                View Services
+              </Button>
+            </Link>
           </div>
 
           {/* Trust Indicators */}
@@ -61,6 +77,12 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      
+      <BookingModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+        service={defaultService}
+      />
     </section>
   );
 };

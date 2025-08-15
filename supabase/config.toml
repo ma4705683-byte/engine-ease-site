@@ -88,3 +88,6 @@ gcp_jwt_path = "supabase/gcp.json"
 
 [functions.send-booking-email]
 verify_jwt = false
+
+[functions.send-contact-email]
+verify_jwt = false

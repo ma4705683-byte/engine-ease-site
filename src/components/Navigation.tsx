@@ -2,10 +2,18 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X, Wrench } from 'lucide-react';
+import { BookingModal } from '@/components/BookingModal';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const location = useLocation();
+
+  const defaultService = {
+    title: 'General Service',
+    price: 'From $50',
+    duration: '1 hour'
+  };
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -38,7 +46,11 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
-            <Button variant="default" size="sm">
+            <Button 
+              variant="default" 
+              size="sm"
+              onClick={() => setIsBookingModalOpen(true)}
+            >
               Book Service
             </Button>
           </div>
@@ -72,7 +84,15 @@ const Navigation = () => {
                 </Link>
               ))}
               <div className="pt-2">
-                <Button variant="default" size="sm" className="w-full">
+                <Button 
+                  variant="default" 
+                  size="sm" 
+                  className="w-full"
+                  onClick={() => {
+                    setIsBookingModalOpen(true);
+                    setIsOpen(false);
+                  }}
+                >
                   Book Service
                 </Button>
               </div>
@@ -80,6 +100,12 @@ const Navigation = () => {
           </div>
         )}
       </div>
+      
+      <BookingModal
+        isOpen={isBookingModalOpen}
+        onClose={() => setIsBookingModalOpen(false)}
+        service={defaultService}
+      />
     </nav>
   );
 };
